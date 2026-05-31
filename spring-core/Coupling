@@ -1,0 +1,136 @@
+## 📱 SIM and Phone Example (Tight vs Loose Coupling)
+
+# Tight Coupling Example (Fixed SIM Phone)
+
+Imagine a phone that works with **only one specific SIM card permanently fixed inside it**.
+
+## Scenario:
+
+- Phone is built to work only with “Airtel SIM”
+- SIM is inside the phone and cannot be changed
+
+## Code analogy:
+
+```java id="t2"
+class AirtelSim {
+    void network() {
+        System.out.println("Airtel network connected");
+    }
+}
+
+class Phone {
+    AirtelSim sim = new AirtelSim(); // tightly coupled
+
+    void call() {
+        sim.network();
+        System.out.println("Calling...");
+    }
+}
+```
+
+---
+
+## Problem:
+
+- You cannot use Jio or Vi SIM
+- If Airtel changes its implementation, phone must change
+- Very rigid system
+
+This is **TIGHT COUPLING**
+
+---
+
+## Real-life meaning:
+
+A phone locked to one SIM = no flexibility
+
+---
+
+# Loose Coupling Example (Normal Smartphone)
+
+Now imagine a modern smartphone:
+
+✔ You can insert any SIM (Jio / Airtel / Vi)
+✔ You can remove and replace SIM anytime
+✔ Phone does not care which SIM is used
+
+---
+
+## Code analogy using interface:
+
+```java id="t3"
+interface Sim {
+    void network();
+}
+```
+
+```java id="t4"
+class JioSim implements Sim {
+    public void network() {
+        System.out.println("Jio network connected");
+    }
+}
+```
+
+```java id="t5"
+class AirtelSim implements Sim {
+    public void network() {
+        System.out.println("Airtel network connected");
+    }
+}
+```
+
+```java id="t6"
+class Phone {
+    private Sim sim;
+
+    // SIM is inserted (Dependency Injection)
+    Phone(Sim sim) {
+        this.sim = sim;
+    }
+
+    void call() {
+        sim.network();
+        System.out.println("Calling...");
+    }
+}
+```
+
+---
+
+## Usage:
+
+```java id="t7"
+public class Main {
+    public static void main(String[] args) {
+
+        Sim sim1 = new JioSim();
+        Phone phone1 = new Phone(sim1);
+        phone1.call();
+
+        Sim sim2 = new AirtelSim();
+        Phone phone2 = new Phone(sim2);
+        phone2.call();
+    }
+}
+```
+
+---
+
+# Why this is Loose Coupling?
+
+- Phone does NOT depend on a specific SIM
+- Any SIM can be used
+- Easy to change without modifying phone code
+- Flexible and scalable
+
+---
+
+# Quick Comparison (SIM Example)
+
+| Feature       | Tight Coupling      | Loose Coupling          |
+| ------------- | ------------------- | ----------------------- |
+| SIM usage     | Fixed (Airtel only) | Any SIM (Jio/Airtel/Vi) |
+| Flexibility   | Low                 | High                    |
+| Change impact | High                | Low                     |
+| Design        | Rigid               | Flexible                |

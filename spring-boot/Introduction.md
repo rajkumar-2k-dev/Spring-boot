@@ -549,20 +549,3 @@ public class UserController {
     }
 }
 ```
-
----
-
-If you want, I can also explain:
-
-- Spring Boot architecture in depth
-- Complete REST API project
-- Microservices using Spring Boot
-- Spring Security with JWT
-- Hibernate/JPA
-- Interview questions
-- Spring Boot roadmap
-- Project with MySQL
-- Exception handling
-- Docker deployment
-- Best practices
-- Internal working of annotations
